@@ -2,6 +2,7 @@ package util;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -59,20 +60,10 @@ public class ExcelUtil {
     public static String getCellVal(Cell cell) {
         if (cell == null) return "";
 
-        switch (cell.getCellType()) {
-            case Cell.CELL_TYPE_BOOLEAN:
+            if(cell.getCellType().equals(CellType.BOOLEAN)) {
                 return Boolean.toString(cell.getBooleanCellValue());
-            case Cell.CELL_TYPE_NUMERIC:
-                if (DateUtil.isCellDateFormatted(cell)) {
-                    return String.valueOf(cell.getDateCellValue());
-                } else {
-                    return String.valueOf(cell.getNumericCellValue());
-                }
-            case Cell.CELL_TYPE_STRING:
-                return cell.getStringCellValue().trim();
-            case Cell.CELL_TYPE_FORMULA:
-                return cell.getCellFormula();
-        }
+            }
+
         return "";
     }
 }
